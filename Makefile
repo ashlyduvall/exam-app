@@ -11,4 +11,5 @@ default:
 		-v "$$(pwd)/web/:/usr/share/nginx/html" \
 		-p 8080:80 \
 		nginx \
-		bash /scripts/run.sh
+		bash /scripts/run.sh && \
+		rm -f ./web/js/main.*
