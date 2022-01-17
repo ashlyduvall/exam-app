@@ -1,10 +1,10 @@
-app.config(function($routeProvider){
+main.config(function($routeProvider){
     $routeProvider
-        .when("/",{
+        .when("/main",{
             templateUrl : "views/default.html",
             controller: "DefaultController"
         })
         .otherwise ({
-            redirectTo: '/'
+            redirectTo: '/main'
         });
 });
