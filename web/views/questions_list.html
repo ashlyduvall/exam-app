@@ -1,7 +1,6 @@
-<h2>Questions follow: </h2>
 <ul>
   <li ng-repeat="question in $ctrl.questions">
-    <a class="btn btn-outline-secondary w-100" href="#!/questions">
+    <a ui-sref="questions_show({ questionId: question.id })" class="btn btn-outline-secondary w-100">
       <div class="bg-dark text-secondary px-4 py-5 text-center">
         <div class="py-5">
           <h1 class="display-5 fw-bold text-white">{{ question.body }}</h1>

@@ -15,4 +15,15 @@ main.config(function($stateProvider){
             }
         }
     })
+
+    $stateProvider.state({
+        name: 'questions_show',
+        url: '/questions/show/{questionId}',
+        component: 'questionsShow',
+        resolve: {
+            question: function(QuestionsService, $transition$){
+                return QuestionsService.getQuestion($transition$.params().questionId);
+            }
+        }
+    })
 });

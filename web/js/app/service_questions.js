@@ -28,6 +28,11 @@ main.factory('QuestionsService', function() {
             let ret = questions.slice(0, limit + 1);
             console.log(ret);
             return ret;
+        },
+        getQuestion: async function(questionId) {
+            let ret = questions.filter(q => q.id == questionId)[0];
+            console.log(ret);
+            return ret;
         }
     };
 });
