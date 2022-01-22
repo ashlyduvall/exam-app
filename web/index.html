@@ -6,28 +6,28 @@
     <link href="/css/cover.css" rel="stylesheet" />
     <link href="/css/bootstrap-icons.css" rel="stylesheet" />
   </head>
-  <body class="d-flex h-100 text-center text-white bg-dark" style="height: 100%;">
+  <body ng-app="main" class="d-flex h-100 text-center text-white bg-dark" style="height: 100%;">
     <div class="cover d-flex w-100 h-100 p-3 mx-auto flex-column">
       <header class="mb-auto">
         <div class="cover-container mx-auto">
           <h3 class="float-md-start mb-0">Exam App</h3>
           <nav class="nav nav-masthead justify-content-center float-md-end">
-            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-            <a class="nav-link" href="questions.html">Questions</a>
-            <a class="nav-link" href="exams.html">Exams</a>
+            <a ui-sref="main" ui-sref-active="active" class="nav-link">Home</a>
+            <a ui-sref="questions"  ui-sref-active="active" class="nav-link">Questions</a>
+            <a ui-sref="exams" ui-sref-active="active" class="nav-link">Exams</a>
           </nav>
         </div>
       </header>
       <main class="px-3">
-        <div ng-app="main" class="container">
-          <div ng-view></div>
+        <div class="container">
+          <ui-view></ui-view>
         </div>
       </main>
       <footer class="mt-auto text-white-50"></footer>
     </div>
   </body>
   <script src="/js/lib/angular.js"></script>
-  <script src="/js/lib/angular-route.js"></script>
+  <script src="/js/lib/angular-ui-router.js"></script>
   <script src="/js/lib/bootstrap.bundle.min.js"></script>
-  <script src="/js/main.6a818eaf.js"></script>
+  <script src="/js/main.af29024b.js"></script>
 </html>
