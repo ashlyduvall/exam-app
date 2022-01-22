@@ -1,10 +1,10 @@
-main.config(function($routeProvider){
-    $routeProvider
-        .when("/main",{
-            templateUrl : "views/default.html",
-            controller: "DefaultController"
-        })
-        .otherwise ({
-            redirectTo: '/main'
-        });
+main.config(function($stateProvider){
+    $stateProvider.state('main', {
+        url: '',
+        views: {
+            '': {
+                templateUrl: "views/default.html"
+            }
+        }
+    });
 });
