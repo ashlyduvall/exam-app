@@ -2,7 +2,7 @@
  * Questions service. Functions pertaining to creating, updating and deleting questions and suchlike.
  */
 
-main.factory('questions', function() {
+main.factory('QuestionsService', function() {
 
     let questions = [];
 
@@ -23,8 +23,11 @@ main.factory('questions', function() {
     }
 
     return {
-        getQuestions: function(limit) {
-            return new Promise.resolve(questions.slice(0, limit + 1));
+        getQuestions: async function(limit) {
+            limit = limit || 10;
+            let ret = questions.slice(0, limit + 1);
+            console.log(ret);
+            return ret;
         }
     };
 });

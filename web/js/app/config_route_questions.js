@@ -8,6 +8,11 @@ main.config(function($stateProvider){
     $stateProvider.state({
         name: 'questions_list',
         url: '/questions/list',
-        component: 'questionsList'
+        component: 'questionsList',
+        resolve: {
+            questions: function(QuestionsService){
+                return QuestionsService.getQuestions();
+            }
+        }
     })
 });
