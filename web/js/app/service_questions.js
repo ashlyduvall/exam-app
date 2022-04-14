@@ -2,37 +2,26 @@
  * Questions service. Functions pertaining to creating, updating and deleting questions and suchlike.
  */
 
-main.factory('QuestionsService', function() {
-
-    let questions = [];
-
-    for (let i = 1; i <= 10; i++) {
-        questions.push({
-            id: i,
-            body: `This is question ${i}.`,
-            answers: [
-                {
-                    id: 10 + i,
-                    body: "foo"
-                },{
-                    id: 30 + i,
-                    body: "bah"
-                }
-            ]
-        });
-    }
+main.factory('QuestionsService', function($http) {
 
     return {
-        getQuestions: async function(limit) {
-            limit = limit || 10;
-            let ret = questions.slice(0, limit + 1);
-            console.log(ret);
-            return ret;
+        getQuestions: async function() {
+            let path = '/questions/all'
+              , req = await $http.get(env.apiUrl + path)
+              , questions = req.data
+            ;
+
+            console.log(questions);
+            return questions;
         },
         getQuestion: async function(questionId) {
-            let ret = questions.filter(q => q.id == questionId)[0];
-            console.log(ret);
-            return ret;
+            let path = '/questions/' + questionId
+              , req = await $http.get(env.apiUrl + path)
+              , questions = req.data
+            ;
+
+            console.log(questions);
+            return questions;
         }
     };
 });
