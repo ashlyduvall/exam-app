@@ -1,11 +1,22 @@
-<ul>
-  <li ng-repeat="question in $ctrl.questions">
+<div class="row">
+  Search bar goes here
+</div>
+<div class="row">
+  <div class="col-md-6 col-xs-12" ng-repeat="question in $ctrl.questions" style="margin-bottom: 15px;">
     <a ui-sref="questions_show({ questionId: question.id })" class="btn btn-outline-secondary w-100">
-      <div class="bg-dark text-secondary px-4 py-5 text-center">
-        <div class="py-5">
-          <h1 class="display-5 fw-bold text-white">{{ question.body }}</h1>
+      <div class="py-5 container">
+        <div class="jumbotron text-white">
+          <h1>Question {{ question.id }}</h1>
+          <p>{{ question.body }}</p>
+        </div>
+        <div class="row">
+          <div ng-repeat="tag in question.tags" class="col-xs-1">
+            <button type="button" class="btn btn-info btn-xs">
+              {{ tag.display_name }}
+            </button>
+          </div>
         </div>
       </div>
     </a>
-  </li>
-</ul>
+  </div>
+</div>
