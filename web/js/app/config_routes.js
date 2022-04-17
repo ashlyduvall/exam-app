@@ -1,4 +1,13 @@
 main.config(function($stateProvider){
+    $stateProvider.state('main', {
+        url: '',
+        views: {
+            '': {
+                templateUrl: "views/default.html"
+            }
+        }
+    });
+
     $stateProvider.state({
         name: 'questions',
         url: '/questions',
