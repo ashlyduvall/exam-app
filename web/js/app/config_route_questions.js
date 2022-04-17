@@ -2,13 +2,7 @@ main.config(function($stateProvider){
     $stateProvider.state({
         name: 'questions',
         url: '/questions',
-        templateUrl: "views/questions_default.html"
-    });
-
-    $stateProvider.state({
-        name: 'questions_list',
-        url: '/questions/list',
-        component: 'questionsList',
+        component: 'questions',
         resolve: {
             questions: function(QuestionsService){
                 return QuestionsService.getQuestions();
@@ -23,17 +17,6 @@ main.config(function($stateProvider){
         resolve: {
             question: function(QuestionsService, $transition$){
                 return QuestionsService.getQuestion($transition$.params().questionId);
-            }
-        }
-    })
-
-    $stateProvider.state({
-        name: 'tags_list',
-        url: '/tags/list',
-        component: 'tagsList',
-        resolve: {
-            tags: function(TagsService){
-                return TagsService.getTags();
             }
         }
     })

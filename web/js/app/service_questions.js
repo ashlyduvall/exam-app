@@ -11,7 +11,6 @@ main.factory('QuestionsService', function($http) {
               , questions = req.data
             ;
 
-            console.log(questions);
             return questions;
         },
         getQuestion: async function(questionId) {
@@ -20,7 +19,9 @@ main.factory('QuestionsService', function($http) {
               , questions = req.data
             ;
 
-            console.log(questions);
+            questions.question_answers.forEach(a => {
+                a.class = a.is_correct_answer ? 'alert-success' : 'alert-danger';
+            });
             return questions;
         }
     };
