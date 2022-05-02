@@ -16,13 +16,20 @@ main.factory('QuestionsService', function($http) {
         getQuestion: async function(questionId) {
             let path = '/questions/' + questionId
               , req = await $http.get(env.apiUrl + path)
-              , questions = req.data
+              , question = req.data
             ;
 
-            questions.question_answers.forEach(a => {
+            question.question_answers.forEach(a => {
                 a.class = a.is_correct_answer ? 'alert-success' : 'alert-danger';
             });
-            return questions;
+
+            question.tags.forEach(t => {
+                let id = t.id;
+                t.remove = () => {
+                    question.tags = question.tags.filter(t => t.id != id);
+                };
+            });
+            return question;
         }
     };
 });
