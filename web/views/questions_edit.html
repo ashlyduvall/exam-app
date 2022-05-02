@@ -8,9 +8,20 @@
       <textarea class="form-control" rows="15">{{ $ctrl.question.body }}</textarea>
     </div>
     <div class="row">
-      <div ng-repeat="tag in $ctrl.question.tags" class="col-xs-1">
-        <button type="button" class="btn btn-info btn-xs" ng-click="tag.remove()">
+      <div class="col-xs-12 col-md-1">
+        <button type="button" class="btn btn-primary btn-xs">
+          Tags:
+        </button>
+      </div>
+      <div class="col-xs-12 col-md-10">
+        <button type="button" ng-repeat="tag in $ctrl.question.tags" class="btn btn-info" ng-click="tag.remove()">
           {{ tag.display_name }}
+        </button>
+      </div>
+      <div class="col-xs-12">
+        <input type="text" ng-model="$ctrl.new_tag_name" />
+        <button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.question.tags.push({display_name: $ctrl.new_tag_name})">
+          Add
         </button>
       </div>
     </div>
