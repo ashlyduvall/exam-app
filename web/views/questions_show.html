@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-md-6 col-xs-12 py-5 container" style="margin-bottom: 15px;">
+    <a ui-sref="questions_edit({ questionId: $ctrl.question.id })"><button type="button" class="btn btn-primary">Edit</button></a>
     <div class="jumbotron text-white">
       <h1>Question {{ $ctrl.question.id }}</h1>
       <p>{{ $ctrl.question.body }}</p>
