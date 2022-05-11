@@ -19,10 +19,6 @@ main.factory('QuestionsService', function($http, TagsService) {
               , question = req.data
             ;
 
-            question.save = function(){
-                return $http.post(`${env.apiUrl}/questions/save`, question);
-            };
-
             question.question_answers.forEach(a => {
                 a.class = a.is_correct_answer ? 'alert-success' : 'alert-danger';
             });

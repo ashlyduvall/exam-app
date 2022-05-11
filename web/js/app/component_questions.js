@@ -41,9 +41,13 @@ main.config(function($stateProvider){
 //==========================================//
 // Controller declaration                   //
 //==========================================//
-function QuestionController ($scope, TagsService, question) {
+function QuestionController ($scope, $http, $state, TagsService, question) {
     console.log(question);
     $scope.question = question;
+    $scope.save_question = async function(){
+        await $http.post(`${env.apiUrl}/questions/save`, question);
+        return $state.go('questions_show', {questionId: question.id});
+    };
     $scope.add_tag = async function(display_name) {
         // Ensure tag doesn't already exist against this question
         for (let q of question.tags) {
@@ -56,7 +60,7 @@ function QuestionController ($scope, TagsService, question) {
         let t = await TagsService.getTagByDisplayName(display_name);
         question.tags.push(t);
         return $scope.$apply();
-    }
+    };
 }
 
 //==========================================//
