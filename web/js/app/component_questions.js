@@ -42,7 +42,6 @@ main.config(function($stateProvider){
 // Controller declaration                   //
 //==========================================//
 function QuestionController ($scope, $http, $state, TagsService, question) {
-    console.log(question);
     $scope.question = question;
     $scope.save_question = async function(){
         await $http.post(`${env.apiUrl}/questions/save`, question);
@@ -60,6 +59,9 @@ function QuestionController ($scope, $http, $state, TagsService, question) {
         let t = await TagsService.getTagByDisplayName(display_name);
         question.tags.push(t);
         return $scope.$apply();
+    };
+    $scope.delete_answer = function(answer) {
+        question.question_answers = question.question_answers.filter(a => a.id != answer.id);
     };
 }
 
