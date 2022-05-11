@@ -27,7 +27,8 @@ main.config(function($stateProvider){
     $stateProvider.state({
         name: 'questions_edit',
         url: '/questions/edit/{questionId}',
-        component: 'questionsEdit',
+        templateUrl: 'views/questions_edit.html',
+        controller: QuestionController,
         resolve: {
             question: function(QuestionsService, $transition$){
                 return QuestionsService.getQuestion($transition$.params().questionId);
@@ -35,6 +36,14 @@ main.config(function($stateProvider){
         }
     })
 });
+
+//==========================================//
+// Controller declaration                   //
+//==========================================//
+function QuestionController ($scope, question) {
+    console.log(question);
+    $scope.question = question;
+}
 
 //==========================================//
 // Component declaration                    //
@@ -47,9 +56,4 @@ main.component("questions", {
 main.component("questionsShow", {
     bindings: { question: '<' },
     templateUrl: "views/questions_show.html",
-});
-
-main.component("questionsEdit", {
-    bindings: { question: '<' },
-    templateUrl: "views/questions_edit.html",
 });

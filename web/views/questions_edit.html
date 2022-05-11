@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-12" style="margin-bottom: 15px;">
-    <h1>Question {{ $ctrl.question.id }}</h1>
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.question.save()">Save Question</button>
+    <h1>Question {{ question.id }}</h1>
+    <button type="button" class="btn btn-primary" ng-click="question.save()">Save Question</button>
   </div>
   <div class="col-md-6 col-xs-12 container" style="margin-bottom: 15px;">
     <div class="jumbotron text-white">
-      <textarea class="form-control" rows="15">{{ $ctrl.question.body }}</textarea>
+      <textarea class="form-control" rows="15">{{ question.body }}</textarea>
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-1">
@@ -14,21 +14,21 @@
         </button>
       </div>
       <div class="col-xs-12 col-md-10">
-        <button type="button" ng-repeat="tag in $ctrl.question.tags" class="btn btn-info" ng-click="tag.remove()">
+        <button type="button" ng-repeat="tag in question.tags" class="btn btn-info" ng-click="tag.remove()">
           {{ tag.display_name }}
         </button>
       </div>
       <div class="col-xs-12">
-        <input type="text" ng-model="$ctrl.new_tag_name" />
-        <!-- button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.question.tags.push({display_name: $ctrl.new_tag_name})" -->
-        <button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.question.add_tag($ctrl.new_tag_name)">
+        <input type="text" ng-model="new_tag_name" />
+        <!-- button type="button" class="btn btn-success btn-xs" ng-click="question.tags.push({display_name: new_tag_name})" -->
+        <button type="button" class="btn btn-success btn-xs" ng-click="question.add_tag(new_tag_name)">
           Add
         </button>
       </div>
     </div>
   </div>
   <div class="col-md-6 col-xs-12">
-    <div ng-repeat="answer in $ctrl.question.question_answers">
+    <div ng-repeat="answer in question.question_answers">
       <div class="row">
         <div class="col-9">
           <textarea class="form-control" rows="5" ng-bind="answer.body"></textarea>
@@ -40,6 +40,6 @@
         </div>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.question.question_answers.push({})">Add Answer</button>
+    <button type="button" class="btn btn-primary" ng-click="question.question_answers.push({})">Add Answer</button>
   </div>
 </div>
