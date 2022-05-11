@@ -23,19 +23,6 @@ main.factory('QuestionsService', function($http, TagsService) {
                 return $http.post(`${env.apiUrl}/questions/save`, question);
             };
 
-            question.add_tag = async function(display_name){
-                // Ensure tag doesn't already exist against this question
-                for (let q of question.tags) {
-                    if (q.display_name == display_name){
-                        alert(`Tag ${display_name} already assigned`);
-                        return;
-                    }
-                }
-
-                let t = await TagsService.getTagByDisplayName(display_name);
-                question.tags.push(t);
-            };
-
             question.question_answers.forEach(a => {
                 a.class = a.is_correct_answer ? 'alert-success' : 'alert-danger';
             });
