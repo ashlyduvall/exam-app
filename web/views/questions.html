@@ -2,6 +2,23 @@
   <div class="input-group col-xs-12" style="margin-bottom: 15px;">
     <input tye="text" class="form-control" placeholder="Filter Questions">
   </div>
+  <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">
+    <a ui-sref="questions_edit({ questionId: 0 })" class="btn btn-outline-secondary w-100 h-100">
+      <div class="py-5 container">
+        <div class="jumbotron text-white">
+          <h1>New Question</h1>
+          <p></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-1">
+          <button type="button" class="btn btn-success btn-xs">
+            Create
+          </button>
+        </div>
+      </div>
+    </a>
+  </div>
   <div class="col-md-6 col-xs-12" ng-repeat="question in $ctrl.questions" style="margin-bottom: 15px;">
     <a ui-sref="questions_show({ questionId: question.id })" class="btn btn-outline-secondary w-100">
       <div class="py-5 container">

@@ -44,7 +44,8 @@ main.config(function($stateProvider){
 function QuestionController ($scope, $http, $state, TagsService, question) {
     $scope.question = question;
     $scope.save_question = async function(){
-        await $http.post(`${env.apiUrl}/questions/save`, question);
+        let req = await $http.post(`${env.apiUrl}/questions/save`, question);
+        question = req.data;
         return $state.go('questions_show', {questionId: question.id});
     };
     $scope.add_tag = async function(display_name) {

@@ -14,6 +14,17 @@ main.factory('QuestionsService', function($http, TagsService) {
             return questions;
         },
         getQuestion: async function(questionId) {
+
+            if (questionId == 0) {
+                return {
+                    id: 0,
+                    body: "",
+                    syllabus: {id: 1, display_name: ""},
+                    question_answers: [],
+                    tags: []
+                };
+            }
+
             let path = '/questions/' + questionId
               , req = await $http.get(env.apiUrl + path)
               , question = req.data
