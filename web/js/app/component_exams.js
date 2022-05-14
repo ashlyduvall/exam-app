@@ -86,6 +86,7 @@ function ExamController ($scope, $http, $state, exam) {
     }
 
     $scope.save_exam = function() {
+        return $http.post(`${env.apiUrl}/exams/save`, exam);
     };
 
     // Parse answers for question
