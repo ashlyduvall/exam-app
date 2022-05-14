@@ -66,11 +66,27 @@ function ExamController ($scope, $http, $state, exam) {
         if ($scope.correct_answers == 1){
             $scope.current_question.question_answers.forEach(a => a.is_selected = false);
             $scope.parse_answers();
+
+        // If this is a multi-select question, prevent changes
+        // if we've already selected the max number.
+        } else {
+            let selected_answers = 0;
+            $scope.current_question.question_answers.forEach(a => {
+                selected_answers += a.is_selected;
+            });
+
+            if (answer.is_selected == false && selected_answers == $scope.correct_answers) {
+                return;
+            }
         }
 
         answer.is_selected = answer.is_selected ? false : true;
         answer.class = answer.is_selected ? 'alert-info' : 'alert-warning';
+        $scope.save_exam();
     }
+
+    $scope.save_exam = function() {
+    };
 
     // Parse answers for question
     $scope.parse_answers = () => {
