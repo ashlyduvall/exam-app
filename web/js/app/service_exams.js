@@ -13,5 +13,13 @@ main.factory('ExamsService', function($http) {
 
             return exams;
         },
+        getExamById: async function(id) {
+            let path = '/exams/' + id
+              , req = await $http.get(env.apiUrl + path)
+              , exam = req.data
+            ;
+
+            return exam;
+        }
   };
 });
