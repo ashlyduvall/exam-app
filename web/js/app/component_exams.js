@@ -8,8 +8,11 @@ main.config(function($stateProvider){
         templateUrl: 'views/exams.html',
         controller: ExamListController,
         resolve: {
-            exams: function(ExamsService){
-                return ExamsService.getExams();
+            exams_in_progress: function(ExamsService){
+                return ExamsService.getExamsInProgress();
+            },
+            exams_finished: function(ExamsService){
+                return ExamsService.getExamsFinished();
             }
         }
     })
@@ -25,13 +28,36 @@ main.config(function($stateProvider){
             }
         }
     })
+
+    $stateProvider.state({
+        name: 'exams_finish',
+        url: '/exams/finish/{examId}',
+        templateUrl: 'views/exam_finish.html',
+        controller: ExamFinishedController,
+        resolve: {
+            exam: function(ExamsService, $transition$){
+                return ExamsService.getExamById($transition$.params().examId);
+            }
+        }
+    })
 });
 
 //==========================================//
 // Controller declaration                   //
 //==========================================//
-function ExamListController ($scope, exams) {
-    $scope.exams = exams;
+function ExamListController ($scope, exams_in_progress, exams_finished) {
+    $scope.exams_in_progress = exams_in_progress;
+    $scope.exams_finished = exams_finished;
+}
+
+function ExamFinishedController($scope, exam){
+    $scope.exam = exam;
+
+    for (let q of exam.questions) {
+        for (let a of q.question_answers) {
+            a.class = "alert-warning"
+        }
+    }
 }
 
 function ExamController ($scope, $http, $state, exam) {
@@ -40,6 +66,11 @@ function ExamController ($scope, $http, $state, exam) {
     $scope.question_index = 0;
     $scope.current_question = exam.questions[$scope.question_index];
     $scope.correct_answers = 0;
+    $scope.next_button_label = "Next"
+
+    if ($scope.number_of_questions == 1) {
+        $scope.next_button_label = "Finish Exam"
+    }
 
     $scope.previous_question = () => {
         if ($scope.question_index <= 0){
@@ -48,16 +79,26 @@ function ExamController ($scope, $http, $state, exam) {
         $scope.question_index--;
         $scope.current_question = exam.questions[$scope.question_index];
         $scope.parse_answers();
+
+        if ($scope.number_of_questions > 1) {
+            $scope.next_button_label = "Next"
+        }
     }
 
-    $scope.next_question = () => {
+    $scope.next_question = async () => {
         if ($scope.question_index + 1 >= $scope.number_of_questions){
-            // @TODO - finish the exam?
-            return;
+            await $http.post(`${env.apiUrl}/exams/finish`, exam);
+            return $state.go('exams_finish', {examId: exam.id});
         }
         $scope.question_index++;
         $scope.current_question = exam.questions[$scope.question_index];
         $scope.parse_answers();
+
+        // If this is now the final question, the
+        // next button should instead say "Finish"
+        if ($scope.question_index + 1 >= $scope.number_of_questions){
+            $scope.next_button_label = "Finish Exam"
+        }
     }
 
     $scope.select_answer = answer => {

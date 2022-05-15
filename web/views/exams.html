@@ -16,12 +16,29 @@
       </div>
     </a>
   </div>
-  <div class="col-md-6 col-xs-12" ng-repeat="exam in exams" style="margin-bottom: 15px;">
+  <div class="col-md-6 col-xs-12" ng-repeat="exam in exams_in_progress" style="margin-bottom: 15px;">
     <a ui-sref="exams_run({ examId: exam.id })" class="btn btn-outline-secondary w-100">
       <div class="py-5 container">
         <div class="jumbotron text-white">
           <h1>Exam {{ exam.id }}</h1>
-          <p>Started at {{ exam.start_date_time }}</p>
+          <p>Started at {{ exam.create_date_time }}</p>
+        </div>
+        <div class="row">
+          <div ng-repeat="tag in exam.exam_tagset.tags" class="col-xs-1">
+            <button type="button" class="btn btn-info btn-xs">
+              {{ tag.display_name }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-6 col-xs-12" ng-repeat="exam in exams_finished" style="margin-bottom: 15px;">
+    <a ui-sref="exams_finish({ examId: exam.id })" class="btn btn-outline-secondary w-100">
+      <div class="py-5 container">
+        <div class="jumbotron text-white">
+          <h1>Exam {{ exam.id }}</h1>
+          <p>Finished at {{ exam.complete_date_time }}</p>
         </div>
         <div class="row">
           <div ng-repeat="tag in exam.exam_tagset.tags" class="col-xs-1">

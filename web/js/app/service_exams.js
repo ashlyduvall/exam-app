@@ -5,8 +5,16 @@
 main.factory('ExamsService', function($http) {
 
     return {
-        getExams: async function() {
-            let path = '/exams/all'
+        getExamsFinished: async function() {
+            let path = '/exams/all/finished'
+              , req = await $http.get(env.apiUrl + path)
+              , exams = req.data
+            ;
+
+            return exams;
+        },
+        getExamsInProgress: async function() {
+            let path = '/exams/all/in_progress'
               , req = await $http.get(env.apiUrl + path)
               , exams = req.data
             ;
