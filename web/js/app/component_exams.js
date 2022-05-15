@@ -51,11 +51,25 @@ function ExamListController ($scope, exams_in_progress, exams_finished) {
 }
 
 function ExamFinishedController($scope, exam){
+    let total_possible_score = 0
+      , total_score = 0
+    ;
     $scope.exam = exam;
 
     for (let q of exam.questions) {
         for (let a of q.question_answers) {
-            a.class = "alert-warning"
+            if (a.is_correct_answer && a.is_selected){
+                total_possible_score++;
+                total_score++;
+                a.class = "alert-success";
+            } else if (a.is_correct_answer) {
+                total_possible_score++;
+                a.class = "alert-info";
+            } else if (a.is_selected) {
+                a.class = "alert-danger";
+            } else {
+                a.class = "alert-warning"
+            }
         }
     }
 }
