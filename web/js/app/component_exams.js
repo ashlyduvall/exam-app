@@ -94,7 +94,7 @@ function ExamNewController($scope, $state, $http, ExamsService, tags) {
         }
 
         let exam = await ExamsService.newExam($scope.selected_tags);
-        $state.go('exam_run', {examId: exam.id});
+        return $state.go('exams_run', {examId: exam.id});
     }
 }
 
