@@ -10,6 +10,10 @@ main.factory('TagsService', function($http) {
             console.log(ret);
             return ret;
         },
+        getAllTags: async function() {
+            let {data} = await $http.get(`${env.apiUrl}/tags/all`);
+            return data;
+        },
         getTagByDisplayName: async function(display_name) {
             let {data} = await $http.post(`${env.apiUrl}/tags/get_or_create`, {display_name});
             return data;

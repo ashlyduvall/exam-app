@@ -28,6 +28,11 @@ main.factory('ExamsService', function($http) {
             ;
 
             return exam;
+        },
+        newExam: async function(tagset) {
+          let {data} = await $http.post(`${env.apiUrl}/exams/new`, tagset);
+
+          return data;
         }
   };
 });

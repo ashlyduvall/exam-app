@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-12">
+    <h1>Select tags for the exam</h1>
+  </div>
+  <div class="col-12" style="margin-bottom: 15px;">
+    <input type="text" class="form-control" placeholder="Filter Tags" ng-change="filter_tags()" ng-model="filter_string" />
+  </div>
+  <div class="col-xs-6 col-md-2 alert {{ t.class }}" style="margin-right: 15px; margin-bottom: 15px;" ng-click="t.toggle()" ng-repeat="t in filtered_tags">
+    {{ t.display_name }}
+  </div>
+  <div class="col-12" style="margin-bottom: 15px;">
+    <button class="btn btn-info w-100" ng-click="begin_exam()">Begin</button>
+  </div>
+</div>

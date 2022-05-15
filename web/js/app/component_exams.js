@@ -18,6 +18,18 @@ main.config(function($stateProvider){
     })
 
     $stateProvider.state({
+        name: 'exams_new',
+        url: '/exams/new/',
+        templateUrl: 'views/exam_new.html',
+        controller: ExamNewController,
+        resolve: {
+            tags: function(TagsService){
+                return TagsService.getAllTags();
+            }
+        }
+    });
+
+    $stateProvider.state({
         name: 'exams_run',
         url: '/exams/run/{examId}',
         templateUrl: 'views/exam_run.html',
@@ -48,6 +60,42 @@ main.config(function($stateProvider){
 function ExamListController ($scope, exams_in_progress, exams_finished) {
     $scope.exams_in_progress = exams_in_progress;
     $scope.exams_finished = exams_finished;
+}
+
+function ExamNewController($scope, $state, $http, ExamsService, tags) {
+    $scope.all_tags = tags;
+    $scope.filtered_tags = tags;
+    $scope.selected_tags = [];
+    $scope.filter_string = "";
+
+    for (let t of tags) {
+        t.class = "alert-warning"
+        t.toggle = function() {
+            t.is_selected = t.is_selected ? false : true;
+
+            if (t.is_selected) {
+                $scope.selected_tags.push(t);
+                t.class = "alert-info";
+            } else {
+                $scope.selected_tags = $scope.selected_tags.filter(s => s.id != t.id);
+                t.class = "alert-warning";
+            }
+        };
+    }
+
+    $scope.filter_tags = function() {
+        $scope.filtered_tags = $scope.all_tags.filter(t => t.display_name.indexOf($scope.filter_string) > -1);
+    }
+
+    $scope.begin_exam = async function() {
+        if ($scope.selected_tags.length == 0) {
+            alert('Please select at least one tag');
+            return;
+        }
+
+        let exam = await ExamsService.newExam($scope.selected_tags);
+        $state.go('exam_run', {examId: exam.id});
+    }
 }
 
 function ExamFinishedController($scope, exam){
