@@ -181,10 +181,10 @@ function ExamController ($scope, $http, $state, exam) {
         }
         $scope.question_index++;
         $scope.current_question = exam.questions[$scope.question_index];
+        $scope.question_in_answered_state = false;
         $scope.parse_answers();
         $scope.progress_button_label = "Select " + $scope.correct_answers;
         $scope.progress_disabled = true;
-        $scope.question_in_answered_state = false;
     }
 
     $scope.select_answer = answer => {
