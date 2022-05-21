@@ -1,13 +1,12 @@
 <div class="row">
   <!-- Prev / Next navigation -->
   <div class="col-md-3 col-xs-12" style="margin-bottom: 15px;">
-    <a ng-click="previous_question()" class="btn btn-outline-secondary w-100 h-100">Previous</a>
   </div>
   <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">
     Question {{ question_index + 1 }} / {{ number_of_questions }}
   </div>
   <div class="col-md-3 col-xs-12" style="margin-bottom: 15px;">
-    <a ng-click="next_question()" class="btn btn-outline-secondary w-100 h-100">{{ next_button_label }}</a>
+    <button ng-click="progress()" ng-disabled="progress_disabled" class="btn btn-outline-secondary w-100 h-100">{{ progress_button_label }}</button>
   </div>
   <!-- Question -->
   <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">
@@ -15,9 +14,6 @@
   </div>
   <!-- Answers -->
   <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">
-    <div class="col-12" style="margin-bottom: 15px;">
-      Select {{ correct_answers }}
-    </div>
     <div class="col-md-6 col-xs-12 container w-100" style="margin-bottom: 15px;" ng-repeat="question_answer in current_question.question_answers">
       <div class="alert {{ question_answer.class }}" ng-click="select_answer(question_answer)">
         <p>{{ question_answer.body }}</p>

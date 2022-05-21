@@ -127,28 +127,54 @@ function ExamController ($scope, $http, $state, exam) {
     $scope.exam = exam;
     $scope.number_of_questions = exam.questions.length
     $scope.question_index = 0;
-    $scope.current_question = exam.questions[$scope.question_index];
     $scope.correct_answers = 0;
-    $scope.next_button_label = "Next"
+    $scope.progress_button_label = ""
+    $scope.progress_disabled = true;
+    $scope.question_in_answered_state = false;
+
+    // Find the first unanswered question on the exam
+    for (let q_index in exam.questions) {
+        let answers_selected = 0
+          , correct_answers = 0
+          , q = exam.questions[q_index]
+        ;
+        for (let a of q.question_answers) {
+            answers_selected += a.is_selected;
+            correct_answers += a.is_correct_answer;
+        }
+
+        if (answers_selected == correct_answers) {
+            continue;
+        } else {
+            $scope.question_index = parseInt(q_index);
+            break;
+        }
+    }
+
+    $scope.current_question = exam.questions[$scope.question_index];
 
     if ($scope.number_of_questions == 1) {
-        $scope.next_button_label = "Finish Exam"
+        $scope.progress_button_label = "Finish Exam"
     }
 
-    $scope.previous_question = () => {
-        if ($scope.question_index <= 0){
+    $scope.progress = async () => {
+        // If this is the first click, show the correct
+        // answers for the question and enable us to move
+        // to the next question.
+        if (!$scope.question_in_answered_state) {
+            $scope.question_in_answered_state = true;
+            $scope.parse_answers();
+            $scope.progress_button_label = "Next question";
+
+            // If this is the final question, the
+            // next button should instead say "Finish"
+            if ($scope.question_index + 1 >= $scope.number_of_questions){
+                $scope.progress_button_label = "Finish Exam"
+            }
+            await $scope.save_exam();
             return;
         }
-        $scope.question_index--;
-        $scope.current_question = exam.questions[$scope.question_index];
-        $scope.parse_answers();
 
-        if ($scope.number_of_questions > 1) {
-            $scope.next_button_label = "Next"
-        }
-    }
-
-    $scope.next_question = async () => {
         if ($scope.question_index + 1 >= $scope.number_of_questions){
             await $http.post(`${env.apiUrl}/exams/finish`, exam);
             return $state.go('exams_finish', {examId: exam.id});
@@ -156,12 +182,9 @@ function ExamController ($scope, $http, $state, exam) {
         $scope.question_index++;
         $scope.current_question = exam.questions[$scope.question_index];
         $scope.parse_answers();
-
-        // If this is now the final question, the
-        // next button should instead say "Finish"
-        if ($scope.question_index + 1 >= $scope.number_of_questions){
-            $scope.next_button_label = "Finish Exam"
-        }
+        $scope.progress_button_label = "Select " + $scope.correct_answers;
+        $scope.progress_disabled = true;
+        $scope.question_in_answered_state = false;
     }
 
     $scope.select_answer = answer => {
@@ -170,6 +193,8 @@ function ExamController ($scope, $http, $state, exam) {
         if ($scope.correct_answers == 1){
             $scope.current_question.question_answers.forEach(a => a.is_selected = false);
             $scope.parse_answers();
+            $scope.progress_button_label = "Submit";
+            $scope.progress_disabled = false;
 
         // If this is a multi-select question, prevent changes
         // if we've already selected the max number.
@@ -180,13 +205,14 @@ function ExamController ($scope, $http, $state, exam) {
             });
 
             if (answer.is_selected == false && selected_answers == $scope.correct_answers) {
+                $scope.progress_button_label = "Submit";
+                $scope.progress_disabled = false;
                 return;
             }
         }
 
         answer.is_selected = answer.is_selected ? false : true;
         answer.class = answer.is_selected ? 'alert-info' : 'alert-warning';
-        $scope.save_exam();
     }
 
     $scope.save_exam = function() {
@@ -198,10 +224,17 @@ function ExamController ($scope, $http, $state, exam) {
         $scope.correct_answers = 0;
         for (let a of $scope.current_question.question_answers) {
             $scope.correct_answers += a.is_correct_answer;
-            a.class = a.is_selected ? 'alert-info' : 'alert-warning';
+            if (!$scope.question_in_answered_state) {
+                a.class = a.is_selected ? 'alert-info' : 'alert-warning';
+            } else if (a.is_correct_answer) {
+                a.class = a.is_selected ? 'alert-success' : 'alert-info';
+            } else {
+                a.class = a.is_selected ? 'alert-danger' : 'alert-warning';
+            }
         }
     };
     $scope.parse_answers();
+    $scope.progress_button_label = "Select " + $scope.correct_answers;
 
     console.log(exam);
 }
