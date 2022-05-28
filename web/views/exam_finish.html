@@ -10,14 +10,12 @@
       <h1>Question {{ q.id }}</h1>
     </div>
     <!-- Question -->
-    <div class="col-md-6 col-xs-12">
-      {{ q.body }}
-    </div>
+    <div class="col-md-6 col-xs-12" ng-bind-html="q.body | exam_markdown"></div>
     <!-- Answers -->
     <div class="col-md-6 col-xs-12">
       <div class="col-xs-12 container w-100" style="margin-bottom: 15px;" ng-repeat="a in q.question_answers">
         <div class="alert {{ a.class }}">
-          <p>{{ a.body }}</p>
+          <p ng-bind-html="a.body | exam_markdown"></p>
         </div>
       </div>
     </div>
