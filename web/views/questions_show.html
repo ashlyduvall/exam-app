@@ -3,7 +3,7 @@
     <a ui-sref="questions_edit({ questionId: question.id })"><button type="button" class="btn btn-primary">Edit</button></a>
     <div class="jumbotron text-white">
       <h1>Question {{ question.id }}</h1>
-      <p>{{ question.body }}</p>
+      <p ng-bind-html="question.body | exam_markdown"></p>
     </div>
     <div class="row">
       <div ng-repeat="tag in question.tags" class="col-xs-1">
@@ -16,7 +16,7 @@
   <div class="col-md-6 col-xs-12">
     <div class="col-xs-12 py-5 container">
       <div ng-repeat="answer in question.question_answers" class="alert {{ answer.class }}">
-        <p>{{ answer.body }}</p>
+        <p ng-bind-html="answer.body | exam_markdown"></p>
       </div>
     </div>
   </div>

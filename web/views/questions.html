@@ -19,12 +19,11 @@
       </div>
     </a>
   </div>
-  <div class="col-md-6 col-xs-12" ng-repeat="question in $ctrl.questions" style="margin-bottom: 15px;">
+  <div class="col-md-6 col-xs-12" ng-repeat="question in questions" style="margin-bottom: 15px;">
     <a ui-sref="questions_show({ questionId: question.id })" class="btn btn-outline-secondary w-100">
       <div class="py-5 container">
         <div class="jumbotron text-white">
-          <h1>Question {{ question.id }}</h1>
-          <p>{{ question.body }}</p>
+          <p ng-bind-html="question.body | exam_markdown"></p>
         </div>
         <div class="row">
           <div ng-repeat="tag in question.tags" class="col-3">

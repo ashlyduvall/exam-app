@@ -5,7 +5,8 @@ main.config(function($stateProvider){
     $stateProvider.state({
         name: 'questions',
         url: '/questions',
-        component: 'questions',
+        templateUrl: 'views/questions.html',
+        controller: QuestionListController,
         resolve: {
             questions: function(QuestionsService){
                 return QuestionsService.getQuestions();
@@ -66,10 +67,13 @@ function QuestionController ($scope, $http, $state, TagsService, question) {
     };
 }
 
-//==========================================//
-// Component declaration                    //
-//==========================================//
-main.component("questions", {
-    bindings: { questions: '<' },
-    templateUrl: "views/questions.html",
-});
+function QuestionListController ($scope, questions) {
+    const QUESTION_DISPLAY_LENGTH = 100;
+    for (let q of questions) {
+        if (q.body.length > QUESTION_DISPLAY_LENGTH) {
+            q.body = q.body.substring(0, QUESTION_DISPLAY_LENGTH) + '...';
+        }
+    }
+
+    $scope.questions = questions;
+}
