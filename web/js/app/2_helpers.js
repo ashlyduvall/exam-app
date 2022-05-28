@@ -3,8 +3,11 @@
 // Filter helpers                           //
 //==========================================//
 // Handles markdown conversion for exam questions and answers.
-main.filter('exam_markdown', ['$sce', function($sce) {
+main.filter('exam_markdown', ['$sce', '$sanitize', function($sce, $sanitize) {
     return function (text) {
-        return text ? $sce.trustAsHtml(text.replace(/\n/g, '<br/>')) : '';
+        text = text || '';
+        text = text.replace(/\n/g, '<br/>');
+        text = $sanitize(text);
+        return $sce.trustAsHtml(text);
     };
 }]);

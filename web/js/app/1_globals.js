@@ -1,4 +1,4 @@
-var main = angular.module('main',["ui.router"]);
+var main = angular.module('main',["ui.router", "ngSanitize"]);
 
 var env = {
     // apiUrl: "http://localhost:8081"
