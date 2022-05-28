@@ -67,11 +67,15 @@ function ExamNewController($scope, $state, $http, ExamsService, tags) {
     $scope.filtered_tags = tags;
     $scope.selected_tags = [];
     $scope.filter_string = "";
+    $scope.all_tags_button_class = "alert-warning";
+    $scope.all_tags_selected = false;
 
     for (let t of tags) {
         t.class = "alert-warning"
         t.toggle = function() {
             t.is_selected = t.is_selected ? false : true;
+            $scope.all_tags_selected = false;
+            $scope.all_tags_button_class = "alert-warning";
 
             if (t.is_selected) {
                 $scope.selected_tags.push(t);
@@ -83,17 +87,29 @@ function ExamNewController($scope, $state, $http, ExamsService, tags) {
         };
     }
 
+    $scope.toggle_all_tags = function() {
+        if ($scope.all_tags_selected) {
+            $scope.all_tags_selected = false;
+            $scope.all_tags_button_class = "alert-warning";
+        } else {
+            $scope.all_tags_selected = true;
+            $scope.all_tags_button_class = "alert-info";
+            $scope.selected_tags = [];
+            tags.forEach(t => {t.class = "alert-warning";});
+        }
+    };
+
     $scope.filter_tags = function() {
         $scope.filtered_tags = $scope.all_tags.filter(t => t.display_name.indexOf($scope.filter_string) > -1);
     }
 
     $scope.begin_exam = async function() {
-        if ($scope.selected_tags.length == 0) {
+        if ($scope.selected_tags.length == 0 && $scope.all_tags_selected == false) {
             alert('Please select at least one tag');
             return;
         }
 
-        let exam = await ExamsService.newExam($scope.selected_tags);
+        let exam = await ExamsService.newExam($scope.selected_tags, $scope.all_tags_selected);
         return $state.go('exams_run', {examId: exam.id});
     }
 }

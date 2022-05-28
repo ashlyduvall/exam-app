@@ -5,6 +5,9 @@
   <div class="col-12" style="margin-bottom: 15px;">
     <input type="text" class="form-control" placeholder="Filter Tags" ng-change="filter_tags()" ng-model="filter_string" />
   </div>
+  <div class="col-xs-6 col-md-2 alert {{ all_tags_button_class }}" style="margin-right: 15px; margin-bottom: 15px;" ng-click="toggle_all_tags()">
+    All Tags
+  </div>
   <div class="col-xs-6 col-md-2 alert {{ t.class }}" style="margin-right: 15px; margin-bottom: 15px;" ng-click="t.toggle()" ng-repeat="t in filtered_tags">
     {{ t.display_name }}
   </div>
