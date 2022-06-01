@@ -75,5 +75,22 @@ function QuestionListController ($scope, questions) {
         }
     }
 
+    $scope.all_questions = questions;
     $scope.questions = questions;
+    $scope.filter_string = "";
+
+    $scope.filter_questions = function() {
+        $scope.questions = $scope.all_questions.filter(q => {
+            if (q.body.indexOf($scope.filter_string) > -1){
+                return true;
+            }
+
+            for (let t of q.tags) {
+                if (t.display_name.indexOf($scope.filter_string) > -1){
+                    return true;
+                }
+            }
+            return false;
+        });
+    };
 }
