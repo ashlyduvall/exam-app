@@ -12,7 +12,7 @@ main.filter('exam_markdown', ['$sce', '$sanitize', function($sce, $sanitize) {
 
         let in_table = false;
         for (let line_index in text) {
-            let this_line = text[line_index];
+            let this_line = $sanitize(text[line_index]);
 
             // In table mode
             if (this_line[0] == '|') {
