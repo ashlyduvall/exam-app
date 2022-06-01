@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-12 py-5 container" ng-if="error_text" style="margin-bottom: 15px;">
+    <div class="alert {{ error_text_class }}">{{ error_text }}</div>
+  </div>
+  <div class="col-12 py-5 container form-group" style="margin-bottom: 15px;">
+    <label for="question_text_block">Enter question text</label>
+    <textarea rows="20" class="form-control" ng-change="parse_question_block()" ng-model="question_text_block" id="question_text_block"></textarea>
+  </div>
+  <div class="col-md-6 col-xs-12 py-5 container" style="margin-bottom: 15px;">
+    <a ng-if="save_question_enabled"><button ng-click="save_question()" type="button" class="btn btn-primary">Save</button></a>
+    <div class="jumbotron text-white">
+      <p ng-bind-html="body | exam_markdown"></p>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-1">
+        <button type="button" class="btn btn-primary btn-xs">
+          Tags:
+        </button>
+      </div>
+      <div ng-repeat="tag in tags" class="col-xs-1">
+        <button type="button" ng-click="tag.remove()" class="btn btn-info btn-xs">
+          {{ tag.display_name }}
+        </button>
+      </div>
+      <div class="col-xs-12">
+        <input type="text" ng-model="new_tag_name" />
+        <button type="button" class="btn btn-success btn-xs" ng-click="add_tag()">
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <div class="col-xs-12 py-5 container">
+      <div ng-repeat="answer in question_answers" class="alert {{ answer.class }}">
+        <p ng-bind-html="answer.body | exam_markdown"></p>
+      </div>
+    </div>
+  </div>
+</div>
