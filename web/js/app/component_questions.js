@@ -67,7 +67,7 @@ function QuestionController ($scope, $http, $state, TagsService, question) {
     };
 }
 
-function QuestionListController ($scope, questions) {
+function QuestionListController ($scope, QuestionsService, questions) {
     const QUESTION_DISPLAY_LENGTH = 100;
     for (let q of questions) {
         if (q.body.length > QUESTION_DISPLAY_LENGTH) {
@@ -79,18 +79,14 @@ function QuestionListController ($scope, questions) {
     $scope.questions = questions;
     $scope.filter_string = "";
 
-    $scope.filter_questions = function() {
-        $scope.questions = $scope.all_questions.filter(q => {
-            if (q.body.indexOf($scope.filter_string) > -1){
-                return true;
-            }
-
-            for (let t of q.tags) {
-                if (t.display_name.indexOf($scope.filter_string) > -1){
-                    return true;
-                }
-            }
-            return false;
-        });
+    $scope.filter_questions = async function() {
+        let questions;
+        if ($scope.filter_string.length){
+            questions = await QuestionsService.getQuestionsWithFilter($scope.filter_string);
+        } else {
+            questions = await QuestionsService.getQuestions();
+        }
+        $scope.questions = questions;
+        return $scope.$apply();
     };
 }

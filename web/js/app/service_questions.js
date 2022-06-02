@@ -13,6 +13,14 @@ main.factory('QuestionsService', function($http, TagsService) {
 
             return questions;
         },
+        getQuestionsWithFilter: async function(filter) {
+            let path = '/questions/all/' + filter
+              , req = await $http.get(env.apiUrl + path)
+              , questions = req.data
+            ;
+
+            return questions;
+        },
         getQuestion: async function(questionId) {
 
             if (questionId == 0) {
