@@ -1,0 +1,7 @@
+---
+#
+# Values for the Exam frontend install
+#
+image: "SET_AT_RUNTIME"
+
+api_hostname: "exam-api.duvall.org.uk"

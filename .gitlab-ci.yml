@@ -30,10 +30,17 @@ build_container:
 
 deploy_container:
   stage: deploy
-  image: alpine
+  image: registry.duvall.org.uk/docker1/alpine/runner:3.13.3
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
-      when: manual
+      when: on_success
     - when: never
   script:
-    - echo "Hello, world"
+    - cd helm
+    - |
+      helm upgrade --install --atomic --create-namespace --wait \
+      --namespace exam \
+      --values values.yaml \
+      --set image="$CI_REGISTRY_IMAGE"":""$CI_BUILD_REF_SLUG" \
+      exam-app \
+      .

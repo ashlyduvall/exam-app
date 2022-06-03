@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: exam
+  labels:
+    k8s-app: exam-app
+data:
+  env.js: |-
+    var env = {
+        apiUrl: "http://exam-api.duvall.org.uk"
+    };
+
