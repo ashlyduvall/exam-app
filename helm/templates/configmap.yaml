@@ -8,6 +8,6 @@ metadata:
 data:
   env.js: |-
     var env = {
-        apiUrl: "http://exam-api.duvall.org.uk"
+        apiUrl: "http://{{ .Values.api_hostname }}"
     };
 
