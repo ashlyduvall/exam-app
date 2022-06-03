@@ -45,13 +45,7 @@ spec:
         - containerPort: 8080
           protocol: TCP
         resources: {}
-        securityContext:
-          allowPrivilegeEscalation: false
-          privileged: false
-          readOnlyRootFilesystem: false
-          runAsGroup: 2001
-          runAsNonRoot: true
-          runAsUser: 1001
+        securityContext: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
