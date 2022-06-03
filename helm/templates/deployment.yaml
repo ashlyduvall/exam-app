@@ -34,7 +34,7 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /
-            port: 8080
+            port: 80
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 10
@@ -42,7 +42,7 @@ spec:
           timeoutSeconds: 30
         name: app
         ports:
-        - containerPort: 8080
+        - containerPort: 80
           protocol: TCP
         resources: {}
         securityContext: {}
