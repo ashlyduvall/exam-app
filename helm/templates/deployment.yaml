@@ -49,7 +49,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-          - mountPath: /usr/share/nginx/js/env.js
+          - mountPath: /usr/share/nginx/html/js/env.js
             name: env
             subPath: env.js
             readOnly: true
