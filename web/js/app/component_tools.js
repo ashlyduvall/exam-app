@@ -25,6 +25,7 @@ function ToolsImportQuestionsController ($scope, $http, $state, TagsService) {
     $scope.error_text_class = "alert-danger";
 
     $scope.body = "";
+    $scope.notes = "";
     $scope.question_answers = [];
 
     $scope.new_tag_name = "";
@@ -58,10 +59,11 @@ function ToolsImportQuestionsController ($scope, $http, $state, TagsService) {
 
         let id = 0
           , body = $scope.body
+          , notes = $scope.notes
           , question_answers = $scope.question_answers
           , syllabus = {id: 1, display_name: ""}
           , tags = $scope.tags
-          , question = {id, body, question_answers, syllabus, tags}
+          , question = {id, body, notes, question_answers, syllabus, tags}
           , {data} = await $http.post(`${env.apiUrl}/questions/save`, question)
         ;
 
@@ -86,6 +88,7 @@ function ToolsImportQuestionsController ($scope, $http, $state, TagsService) {
         $scope.save_question_enabled = false;
         $scope.error_text = "";
         $scope.body = "";
+        $scope.notes = "";
         $scope.question_answers = [];
 
         // Rules:
@@ -147,7 +150,29 @@ function ToolsImportQuestionsController ($scope, $http, $state, TagsService) {
             };
             $scope.question_answers.push(answer);
         }
-        $scope.start_of_next_question = end_of_answer_body + 3;
+
+        //  If that was the end of the content, don't bother parsing notes
+        if (end_of_answer_body == $scope.question_text_block.length) {
+            $scope.start_of_next_question = end_of_answer_body;
+            $scope.save_question_enabled = true;
+            return;
+        }
+
+        //  * Now parse the notes block
+        let start_of_notes_block = end_of_answer_body + 3
+          , end_of_notes_block = $scope.question_text_block.indexOf("\n\n\n", start_of_notes_block)
+        ;
+
+        //     If not found, assume the notes block is the remaining content
+        if (end_of_notes_block == -1){
+            end_of_notes_block = $scope.question_text_block.length;
+        }
+
+        let notes_block = $scope.question_text_block.substring(start_of_notes_block, end_of_notes_block);
+        $scope.notes = notes_block;
+        console.log({ start_of_notes_block, end_of_notes_block, notes_block });
+
+        $scope.start_of_next_question = end_of_notes_block + 3;
         $scope.save_question_enabled = true;
     };
 }

@@ -9,7 +9,7 @@
     <div class="col-12" style="margin-bottom: 15px;">
       <h1>Question {{ q.id }}</h1>
     </div>
-    <!-- Question -->
+    <!-- Question Body -->
     <div class="col-md-6 col-xs-12" ng-bind-html="q.body | exam_markdown"></div>
     <!-- Answers -->
     <div class="col-md-6 col-xs-12">
@@ -19,5 +19,7 @@
         </div>
       </div>
     </div>
+    <!-- Question Notes -->
+    <div class="col-12 alert alert-info" ng-if="q.notes" ng-bind-html="q.notes | exam_markdown"></div>
   </div>
 </div>

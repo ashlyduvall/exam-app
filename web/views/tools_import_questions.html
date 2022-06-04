@@ -9,7 +9,10 @@
   <div class="col-md-6 col-xs-12 py-5 container" style="margin-bottom: 15px;">
     <a ng-if="save_question_enabled"><button ng-click="save_question()" type="button" class="btn btn-primary">Save</button></a>
     <div class="jumbotron text-white">
+      <h3>Body</h3>
       <p ng-bind-html="body | exam_markdown"></p>
+      <h3>Notes</h3>
+      <p ng-bind-html="notes | exam_markdown"></p>
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-1">

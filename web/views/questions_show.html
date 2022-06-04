@@ -4,6 +4,7 @@
     <div class="jumbotron text-white">
       <h1>Question {{ question.id }}</h1>
       <p ng-bind-html="question.body | exam_markdown"></p>
+      <p ng-bind-html="question.notes | exam_markdown"></p>
     </div>
     <div class="row">
       <div ng-repeat="tag in question.tags" class="col-xs-1">
