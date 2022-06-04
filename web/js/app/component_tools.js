@@ -172,6 +172,29 @@ function ToolsImportQuestionsController ($scope, $http, $state, TagsService) {
         $scope.notes = notes_block;
         console.log({ start_of_notes_block, end_of_notes_block, notes_block });
 
+        // Handle declaring correct answers in the notes block
+        if (notes_block.indexOf("Correct Answer:") == 0) {
+            let correct_answers_split = notes_block.match(/^Correct Answer: (.*)\n/)
+              , answer_index = 'ABCDEFGH'
+            ;
+
+            console.log({correct_answers_split});
+            let correct_answers = correct_answers_split[1].split("");
+
+            for (let ca of correct_answers) {
+                let ai = answer_index.indexOf(ca)
+                  , a = $scope.question_answers[ai]
+                ;
+
+                a.is_correct_answer = true;
+                a.class = "alert-success";
+            }
+
+            for (let a of $scope.question_answers) {
+                a.body = a.body.replace(/^[A-G]\. /,"");
+            }
+        }
+
         $scope.start_of_next_question = end_of_notes_block + 3;
         $scope.save_question_enabled = true;
     };

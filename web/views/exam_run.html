@@ -9,15 +9,15 @@
     <button ng-click="progress()" ng-disabled="progress_disabled" class="btn btn-outline-secondary w-100 h-100">{{ progress_button_label }}</button>
   </div>
   <!-- Question Body -->
-  <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;" ng-bind-html="current_question.body | exam_markdown"></div>
+  <div class="col-md-6 col-xs-12" style="margin-bottom: 15px; text-align: left;" ng-bind-html="current_question.body | exam_markdown"></div>
   <!-- Answers -->
   <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">
     <div class="col-md-6 col-xs-12 container w-100" style="margin-bottom: 15px;" ng-repeat="question_answer in current_question.question_answers">
       <div class="alert {{ question_answer.class }}" ng-click="select_answer(question_answer)">
-        <p ng-bind-html="question_answer.body | exam_markdown"></p>
+        <p style="text-align: left;" ng-bind-html="question_answer.body | exam_markdown"></p>
       </div>
     </div>
   </div>
   <!-- Question Notes -->
-  <div class="col-12 alert alert-info" style="margin-bottom: 15px;" ng-if="question_in_answered_state" ng-bind-html="current_question.notes | exam_markdown"></div>
+  <div class="col-12 alert alert-info" style="margin-bottom: 15px; text-align: left;" ng-if="question_in_answered_state" ng-bind-html="current_question.notes | exam_markdown"></div>
 </div>

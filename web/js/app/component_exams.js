@@ -208,6 +208,7 @@ function ExamController ($scope, $http, $state, exam) {
         // only one correct answer.
         if ($scope.correct_answers == 1){
             $scope.current_question.question_answers.forEach(a => a.is_selected = false);
+            answer.is_selected = answer.is_selected ? false : true;
             $scope.parse_answers();
             $scope.progress_button_label = "Submit";
             $scope.progress_disabled = false;
@@ -220,15 +221,29 @@ function ExamController ($scope, $http, $state, exam) {
                 selected_answers += a.is_selected;
             });
 
+            // Attempting to select another answer when at max
             if (answer.is_selected == false && selected_answers == $scope.correct_answers) {
-                $scope.progress_button_label = "Submit";
-                $scope.progress_disabled = false;
                 return;
             }
-        }
 
-        answer.is_selected = answer.is_selected ? false : true;
-        answer.class = answer.is_selected ? 'alert-info' : 'alert-warning';
+            // You can always deselect
+            if (answer.is_selected) {
+                answer.is_selected = false;
+                selected_answers--;
+            } else {
+                answer.is_selected = true;
+                selected_answers++
+            }
+
+            // The number of expected answer has been selected, enable the progress button
+            if (selected_answers == $scope.correct_answers) {
+                $scope.progress_button_label = "Submit";
+                $scope.progress_disabled = false;
+            } else {
+                $scope.progress_disabled = true;
+            }
+            return $scope.parse_answers();
+        }
     }
 
     $scope.save_exam = function() {
