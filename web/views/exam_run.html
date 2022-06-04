@@ -8,7 +8,7 @@
   <div class="col-md-3 col-xs-12" style="margin-bottom: 15px;">
     <button ng-click="progress()" ng-disabled="progress_disabled" class="btn btn-outline-secondary w-100 h-100">{{ progress_button_label }}</button>
   </div>
-  <!-- Question -->
+  <!-- Question Body -->
   <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;" ng-bind-html="current_question.body | exam_markdown"></div>
   <!-- Answers -->
   <div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">
@@ -18,4 +18,6 @@
       </div>
     </div>
   </div>
+  <!-- Question Notes -->
+  <div class="col-12 alert alert-info" style="margin-bottom: 15px;" ng-if="question_in_answered_state" ng-bind-html="current_question.notes | exam_markdown"></div>
 </div>
