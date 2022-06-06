@@ -1,3 +1,3 @@
 var env = {
-    apiUrl: "http://workstation.vm.duvall.org.uk:8081"
+    apiUrl: "http://localhost:8081"
 };
